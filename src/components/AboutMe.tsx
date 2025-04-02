@@ -7,18 +7,24 @@ import {useParams} from "react-router";
 
 const AboutMe = () => {
     const [hero, setHero] = useState<HeroInfo>();
-    let {heroId = defaultHero} = useParams();
+    const [header, setHeader] = useState<string>("");
+    let {heroId } = useParams();
+
+    const currentHeroId = heroId && characters[heroId] ? heroId : defaultHero;
 
 
     useEffect(() => {
-        if(!characters[heroId]) {
-            heroId = defaultHero;
-        }
-        const hero = JSON.parse(localStorage.getItem(heroId)!);
-        if(hero && ((Date.now() - hero.timestamp) < period_month)) {
-            setHero(hero.payload);
+        setHeader(characters[currentHeroId].name);
+        const storedHero = JSON.parse(localStorage.getItem("currentHero")!);
+        //
+        // if(!characters[heroId]) {
+        //     heroId = defaultHero;
+        // }
+        // const hero = JSON.parse(localStorage.getItem(heroId)!);
+        if(storedHero && ((Date.now() - storedHero.timestamp) < period_month)) {
+            setHero(storedHero.payload);
         } else {
-            fetch(characters[heroId].url)
+            fetch(characters[currentHeroId].url)
                 .then(response => response.json())
                 .then(data => {
                     const info = {
@@ -32,28 +38,42 @@ const AboutMe = () => {
                         eye_color: data.eye_color
                     }
                     setHero(info);
-                    localStorage.setItem(heroId, JSON.stringify({
+                    localStorage.setItem(currentHeroId, JSON.stringify({
                         payload: info,
                         timestamp: Date.now()
                     }));
                 })
         }
 
-    }, [])
+    }, [currentHeroId]);
 
     const heroAttributes = hero ? Object.entries(hero) : [];
 
+    // return (
+    //     hero && (
+    //         <div className='fs-2 lh-lg text-justify ms-5'>
+    //             {heroAttributes.map(([key, value]) => (
+    //                 <p key={key}>
+    //                     <span className='display-3'>{key.replace("_", " ")}:</span> {value}
+    //                 </p>
+    //             ))}
+    //         </div>
+    //     )
+    // );
+
     return (
-        hero && (
-            <div className='fs-2 lh-lg text-justify ms-5'>
+        <div>
+            <h1 className="text-center display-2">{header}</h1>
+            <div className="fs-2 lh-lg text-justify ms-5">
                 {heroAttributes.map(([key, value]) => (
                     <p key={key}>
-                        <span className='display-3'>{key.replace("_", " ")}:</span> {value}
+                        <span className="display-3">{key.replace("_", " ")}:</span> {value}
                     </p>
                 ))}
             </div>
-        )
+        </div>
     );
+
 };
 
 export default AboutMe;
