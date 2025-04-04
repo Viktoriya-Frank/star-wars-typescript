@@ -2,22 +2,20 @@ import './App.css'
 import Header from "./components/Header.tsx";
 import Main from "./components/Main.tsx";
 import Footer from "./components/Footer.tsx";
+import {defaultHero} from "./utils/constants.ts";
 import {useState} from "react";
-import {navItems} from "./utils/constants.ts";
-import {StarWarsContext} from "./utils/context.tsx";
+import {SWContext} from "./utils/context.ts";
 
 function App() {
-    const [page, setPage] = useState(navItems[0]);
+    const [hero, setHero] = useState(defaultHero);
 
     return (
         <div className={'container-fluid'}>
-            <StarWarsContext value={{
-                page, changePage: setPage
-            }}>
-                <Header/>
-                <Main/>
-            </StarWarsContext>
+            <SWContext value={{hero, changeHero: setHero}}>
+            <Header/>
+            <Main/>
             <Footer/>
+            </SWContext>
         </div>
     )
 }

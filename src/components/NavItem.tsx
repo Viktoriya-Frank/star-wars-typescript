@@ -1,14 +1,20 @@
-import {useContext} from 'react';
-import {StarWarsContext} from "../utils/context.tsx";
+import {NavLink} from "react-router";
+import {Item} from "../utils/types.d.tsx";
+import {SWContext} from "../utils/context.ts";
+import {useContext} from "react";
+
 
 interface Props {
-    itemTitle: string
+    item: Item
 }
 
-const NavItem = ({itemTitle}: Props) => {
-    const { changePage } = useContext(StarWarsContext);
+const NavItem = ({item}: Props) => {
+    const {hero} = useContext(SWContext);
+
+
     return (
-        <li onClick={() => changePage(itemTitle)} className="nav-item btn btn-danger mx-1">{itemTitle}</li>
+        <NavLink
+            to={`${item.path}/${hero}`} className="nav-item btn btn-danger mx-1">{item.title}</NavLink>
     );
 };
 

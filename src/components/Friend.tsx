@@ -1,11 +1,13 @@
+import {characters, navItems} from "../utils/constants.ts";
+import {NavLink} from "react-router";
 
 interface Props {
-    picture: string,
+    friend: string,
     position: number
 }
 
-const Friend = ({picture, position}: Props) => {
-    let styles = "col-sm-4 p-1";
+const Friend = ({friend, position}: Props) => {
+    let styles = "w-100";
 
     if (position === 7) {
         styles += " bottomLeft"
@@ -15,7 +17,9 @@ const Friend = ({picture, position}: Props) => {
         styles += " bottomRight";
     }
     return (
-        <img className={styles} src={picture} alt="Friend"/>
+        <NavLink className={'col-sm-4 p-1'} to={`/${navItems[0].path}/${friend}`}>
+        <img className={styles} src={characters[friend].img} alt="Friend"/>
+        </NavLink>
     );
 };
 
