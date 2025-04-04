@@ -2,14 +2,20 @@ import './App.css'
 import Header from "./components/Header.tsx";
 import Main from "./components/Main.tsx";
 import Footer from "./components/Footer.tsx";
+import {defaultHero} from "./utils/constants.ts";
+import {useState} from "react";
+import {SWContext} from "./utils/context.ts";
 
 function App() {
+    const [hero, setHero] = useState(defaultHero);
 
     return (
         <div className={'container-fluid'}>
+            <SWContext value={{hero, changeHero: setHero}}>
             <Header/>
             <Main/>
             <Footer/>
+            </SWContext>
         </div>
     )
 }

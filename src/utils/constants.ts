@@ -31,8 +31,8 @@ export const characters: Characters = {
         url: `${base_url+version}/peoples/3`
     },
     leia:{
-        name: "Yoda",
-        img: friend6,
+        name: "Leila",
+        img: friend9,
         url: `${base_url+version}/peoples/5`
     },
     obi_wan:{
@@ -51,8 +51,8 @@ export const characters: Characters = {
         url: `${base_url+version}/peoples/14`
     },
     yoda:{
-        name: "Leia Organa",
-        img: friend9,
+        name: "Yoda",
+        img: friend6,
         url: `${base_url+version}/peoples/0`
     },
     ewok:{
@@ -68,8 +68,8 @@ export const characters: Characters = {
 };
 
 
-export const friends = [friend1, friend2, friend3, friend4, friend5, friend6, friend7, friend8, friend9];
-export const defaultHero = 'luke';
+export const friends = Object.keys(characters);
+export const defaultHero = friends[0];
 export const navItems: Item[] =
     [{title: 'Home', path: 'home'},
     {title: 'About Me', path: 'about_me'},
